@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heybuddy</title>
+    <link rel="shortcut icon" href="assets/image/logo.png" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- bootstrap Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.css">
+
+    <!-- Particle js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+        type="text/javascript"></script>
+
+    <!-- textillate -->
+    <link rel="stylesheet" href="assets/vendore/texllate/animate.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Offcanvas Sidebar for Chat History -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="historyOffcanvas" aria-labelledby="historyOffcanvasLabel"
+        style="background-color: var(--chat-bg, #181818); border-right: 1px solid var(--neon-color, rgb(138, 43, 226));">
+        <div class="offcanvas-header border-bottom"
+            style="border-color: rgba(var(--neon-rgb, 138, 43, 226), 0.5) !important;">
+            <h5 class="offcanvas-title" style="color: var(--text-color);" id="historyOffcanvasLabel">Chat History</h5>
+            <div>
+                <button id="ClearHistoryBtn" class="btn btn-sm btn-outline-danger me-2" title="Clear All History"><i
+                        class="bi bi-trash"></i></button>
+                <button type="button" class="btn-close" style="filter: var(--close-btn-filter);"
+                    data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="offcanvas-body">
+            <ul id="history-list" class="list-unstyled">
+                <!-- History items appended here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Offcanvas Sidebar for Settings -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="settingsOffcanvas" aria-labelledby="settingsOffcanvasLabel"
+        style="background-color: var(--chat-bg, #181818); border-left: 1px solid var(--neon-color, rgb(138, 43, 226));">
+        <div class="offcanvas-header border-bottom"
+            style="border-color: rgba(var(--neon-rgb, 138, 43, 226), 0.5) !important;">
+            <h5 class="offcanvas-title" style="color: var(--text-color);" id="settingsOffcanvasLabel"><i
+                    class="bi bi-gear"></i> Settings</h5>
+            <button type="button" class="btn-close" style="filter: var(--close-btn-filter);" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" style="color: var(--text-color);">
+
+            <h6 class="mb-3 mt-2 text-secondary">AI Brain Settings</h6>
+
+            <div class="mb-4">
+                <label for="aiPersonality" class="form-label">Assistant Personality</label>
+                <select class="form-select bg-dark text-light" id="aiPersonality"
+                    style="border-color: var(--neon-color);">
+                    <option value="Professional" selected>Professional & Polite</option>
+                    <option value="Funny">Funny & Witty</option>
+                    <option value="Sarcastic">Sarcastic & Savage</option>
+                    <option value="Jarvis">Jarvis (Sci-Fi AI)</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="aiLanguage" class="form-label">Response Language</label>
+                <select class="form-select bg-dark text-light" id="aiLanguage" style="border-color: var(--neon-color);">
+                    <option value="English" selected>English</option>
+                    <option value="Hindi">Hindi (हिंदी)</option>
+                    <option value="Hinglish">Hinglish (Hindi + English)</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="aiDetail" class="form-label">Answer Detail</label>
+                <select class="form-select bg-dark text-light" id="aiDetail" style="border-color: var(--neon-color);">
+                    <option value="Detailed" selected>Detailed Paragraphs</option>
+                    <option value="Short bullet points">Short Bullet Points</option>
+                    <option value="One sentence summary">One Sentence Summary</option>
+                </select>
+            </div>
+
+            <h6 class="mb-3 mt-4 text-secondary">Voice & Audio</h6>
+
+            <div class="mb-4">
+                <label for="voiceChanger" class="form-label">Assistant Voice</label>
+                <select class="form-select bg-dark text-light" id="voiceChanger"
+                    style="border-color: var(--neon-color);">
+                    <option value="0" selected>Male Voice (Default)</option>
+                    <option value="1">Female Voice (Zira)</option>
+                </select>
+            </div>
+
+            <div class="mb-4 d-flex justify-content-between align-items-center">
+                <label for="voiceMute" class="form-label mb-0">Mute Assistant (Text Only)</label>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="voiceMute" style="cursor: pointer;">
+                </div>
+            </div>
+
+            <h6 class="mb-3 mt-4 text-secondary">System Options</h6>
+
+            <div class="mb-3 d-grid">
+                <button id="ExportHistoryBtn" class="btn btn-outline-primary"
+                    style="border-color: #8a2be2; color: #8a2be2;"><i class="bi bi-download"></i> Export Chat
+                    History</button>
+            </div>
+            <div class="mb-4 d-grid">
+                <button id="ResetAppBtn" class="btn btn-outline-danger"><i class="bi bi-arrow-clockwise"></i> Reset
+                    Application</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Main Oval Section -->
+    <section id="oval" class="mb-4">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="d-flex justify-content-center align-items-center" style="height: 72vh;">
+                    <canvas id="canvasOne" width="700" height="420" style="position: absolute;"></canvas>
+                    <div id="heybuddyHood">
+                        <div class="square">
+                            <span class="circle"></span>
+                            <span class="circle"></span>
+                            <span class="circle"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h5 class="text-light text text-center">Ask me anything</h5>
+            <div class="col-md-12 mt-4">
+                <div class="text-center">
+                    <div id="textinput" class="d-flex justify-content-center">
+                        <input type="text" class="input-field" name="chatbox" id="chatbox" placeholder="type here..."
+                            style="width: 60%;">
+                        <button id="MicBtn" class="glow-on-hover btn-magnetic"><i class="bi bi-mic"></i></button>
+                        <button id="SendBtn" class="glow-on-hover btn-magnetic"><i class="bi bi-arrow-up-circle-fill"></i></button>
+                        <button class="glow-on-hover btn-magnetic" data-bs-toggle="offcanvas" data-bs-target="#historyOffcanvas"
+                            title="Chat History"><i class="bi bi-clock-history"></i></button>
+                        <button id="SettingBtn" class="glow-on-hover btn-magnetic" data-bs-toggle="offcanvas"
+                            data-bs-target="#settingsOffcanvas" title="Settings"><i class="bi bi-gear"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </section>
+
+    <!-- Siriwave Section -->
+    <section id="siriwave" class="md-4" hidden>
+        <div class="container-fluid">
+            <!-- Top Navigation for Siri Page -->
+            <div class="position-absolute top-0 start-0 p-4 z-index-2">
+                <button id="SiriBackBtn" class="btn btn-outline-light rounded-circle btn-magnetic" style="width: 45px; height: 45px;">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-center align-items-center flex-column" style="height: 100vh; position: relative; overflow: hidden;">
+                        
+                        <div class="text-center z-index-1">
+                            <p class="siri-message glowing-text mb-4">Hey Buddy, I am Listening...</p>
+                        </div>
+                        
+                        <div id="siri-container" style="width: 100%; max-width: 600px; height: 150px;"></div>
+                        
+                        <!-- Interactive Pulsing Mic Button (Smaller) -->
+                        <div class="mt-4">
+                            <button id="SiriMicBtn" class="glow-on-hover btn-magnetic mic-listening" style="width: 55px; height: 55px; border-radius: 50%; font-size: 1.2rem;">
+                                <i class="bi bi-mic"></i>
+                            </button>
+                        </div>
+
+                        <div class="mt-4 tech-loading">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Section -->
+    <section id="chat-section" class="mb-4" hidden>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="chat-container">
+                    <div class="chat-header d-flex justify-content-between align-items-center">
+                        <button id="BackBtn" class="btn btn-outline-light"><i class="bi bi-arrow-left"></i>Back</button>
+                        <h4 class="text-light m-0" style="font-family: cursive;">HeyBuddy Chat</h4>
+                        <button class="btn btn-outline-light" data-bs-toggle="offcanvas"
+                            data-bs-target="#historyOffcanvas"><i class="bi bi-clock-history"></i></button>
+                    </div>
+                    <div class="chat-body" id="chat-body">
+                        <!-- Messages will be appended here -->
+                    </div>
+                    <!-- Chat Input Inside UI -->
+                    <div class="chat-input-area p-3 border-top d-flex"
+                        style="border-color: rgba(138, 43, 226, 0.5) !important;">
+                        <input type="text" id="inner-chatbox" class="form-control me-2" placeholder="Ask follow up..."
+                            style="background: #222; color: white; border: 1px solid #8a2be2;">
+                        <button id="InnerSendBtn" class="btn btn-primary" style="background: #8a2be2; border: none;"><i
+                                class="bi bi-send"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </section>
+
+
+    <!-- jQuery (ONLY ONE) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- jQuery UI -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+    <!--partical-->
+    <script src="script.js"></script>
+
+    <!--siri wave-->
+    <script src="https://unpkg.com/siriwave/dist/siriwave.umd.min.js"></script>
+    <!-- textillate -->
+    <script src="assets/vendore/texllate/jquery.fittext.js"></script>
+    <script src="assets/vendore/texllate/jquery.lettering.js"></script>
+    <script src="https://jschr.github.io/textillate/jquery.textillate.js"></script>
+
+    <script src="main.js"></script>
+    <script src="controller.js"></script>
+    <script src="/eel.js"></script>
+</body>
+
+</html>
